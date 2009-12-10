@@ -5,6 +5,8 @@ from itertools import cycle
 
 _builtin_open = open
 
+_open_builtin = open
+
 class ShapeList(list):
     def __init__(self, *ka, **kw):
         self._comment_list = kw.pop("comment_list", None)
@@ -106,6 +108,9 @@ class ShapeList(list):
     def write(self,outfile):
         """ Writes the current shape list out as a region file """
 
+        myopen = _open_builtin
+        outf = myopen(outfile,'w')
+
         # check for consistent coordinate system
         if len(set([shape.coord_format for shape in self])) > 1:
             raise ValueError("Inconsistent coordinate formats")
@@ -142,7 +147,7 @@ def parse(region_string):
     return ShapeList(shape_list, comment_list=comment_list)
 
 def open(fname):
-    region_string = _builtin_open(fname).read()
+    region_string = _open_builtin(fname).read()
     return parse(region_string)
 
 
