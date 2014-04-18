@@ -63,7 +63,8 @@ def properties_func_default(shape, saved_attrs):
         font = attr_dict.get("font")
         if font:
             a = font.split()
-            if len(a) >= 3:
+            # ds9 6.2 has specification style "helvetica 10 normal roman"
+            if len(a) in [3,4]: 
                 fontsize=float(a[1])
                 kwargs["fontsize"]=fontsize
     elif shape.name == "point":
