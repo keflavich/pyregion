@@ -74,8 +74,10 @@ def convert_to_imagecoord(shape, header_or_wcs):
 
     if isinstance(header_or_wcs, WCS):
         new_wcs = header_or_wcs
+        header = new_wcs.to_header()
     else:
-        new_wcs = WCS(header)
+        header = header_or_wcs
+        new_wcs = WCS(header_or_wcs)
     pixel_scales = proj_plane_pixel_scales(new_wcs)
 
     for coordinate, coordinate_type in coord_list_iter:
